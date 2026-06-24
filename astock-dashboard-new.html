@@ -623,8 +623,12 @@ function switchTab(tab, el) {
 function switchSubTab(page, sub, el) {
   el.parentElement.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
-  document.querySelectorAll('#page-' + page + ' .sub-panel').forEach(p => p.classList.remove('active'));
-  (document.getElementById('page-' + page + '-' + sub) || document.getElementById(page + '-' + sub)).classList.add('active');
+  // 隐藏当前page下所有sub-panel
+  var pageEl = document.getElementById('page-' + page);
+  if (pageEl) pageEl.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('active'));
+  // 显示目标sub-panel（id格式: page-sub，如market-macro）
+  var target = document.getElementById(page + '-' + sub);
+  if (target) target.classList.add('active');
   // 切换后重新渲染当前子面板内容
   if (page === 'market') renderMarket();
 }
