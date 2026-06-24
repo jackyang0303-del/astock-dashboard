@@ -322,7 +322,7 @@ button:active{opacity:.8}
     <div class="sub-tab" onclick="switchSubTab('market','sectors',this)">板块趋势</div>
   </div>
 
-  <div id="market-macro" class="sub-panel active">
+  <div id="page-market-macro" class="sub-panel active">
     <!-- Macro scores -->
     <div class="card">
       <div class="card-title flex justify-between">
@@ -335,7 +335,7 @@ button:active{opacity:.8}
     <div class="grid-2" id="macro-cards"></div>
   </div>
 
-  <div id="market-sectors" class="sub-panel">
+  <div id="page-market-sectors" class="sub-panel">
     <div class="flex justify-between items-center mb-3">
       <span class="fw-bold">追踪方向</span>
       <button class="btn-primary btn-sm" onclick="showAddDirection()">+ 添加</button>
@@ -624,7 +624,7 @@ function switchSubTab(page, sub, el) {
   el.parentElement.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
   document.querySelectorAll('#page-' + page + ' .sub-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById(page + '-' + sub).classList.add('active');
+  document.getElementById('page-' + page + '-' + sub).classList.add('active');
   // 切换后重新渲染当前子面板内容
   if (page === 'market') renderMarket();
 }
