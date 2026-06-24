@@ -223,6 +223,40 @@ button:active{opacity:.8}
 .total-score .score-num{font-size:48px;font-weight:700}
 .total-score .score-label{font-size:13px;color:var(--sub)}
 
+
+/* Recommend page */
+.rec-header{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:12px}
+.rec-header .rec-date{font-size:12px;color:var(--sub)}
+.rec-header .rec-note{font-size:11px;color:var(--muted);margin-top:2px}
+.rec-section{margin-bottom:12px}
+.rec-section-header{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:10px 14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none}
+.rec-section-header:active{opacity:.8}
+.rec-section-header .rec-sec-title{font-size:14px;font-weight:700}
+.rec-section-header .rec-arrow{font-size:12px;color:var(--muted);transition:transform .2s}
+.rec-section-header .rec-arrow.open{transform:rotate(90deg)}
+.rec-cards{padding:6px 0}
+.rec-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px;margin:8px 0;position:relative;overflow:hidden}
+.rec-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%}
+.rec-card.score-high::before{background:var(--green)}
+.rec-card.score-mid::before{background:var(--yellow)}
+.rec-card.score-low::before{background:var(--orange)}
+.rec-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
+.rec-card-name{font-size:15px;font-weight:700}
+.rec-card-code{font-size:12px;color:var(--sub);margin-left:6px}
+.rec-card-score{font-size:14px;font-weight:700;padding:2px 8px;border-radius:12px}
+.rec-card-score.high{background:rgba(34,197,94,.15);color:var(--green)}
+.rec-card-score.mid{background:rgba(234,179,8,.15);color:var(--yellow)}
+.rec-card-score.low{background:rgba(249,115,22,.15);color:var(--orange)}
+.rec-card-price{display:flex;align-items:baseline;gap:10px;margin-bottom:4px}
+.rec-card-price .price-val{font-size:16px;font-weight:700}
+.rec-card-price .price-chg{font-size:12px;font-weight:500}
+.rec-card-price .price-mcap{font-size:12px;color:var(--muted);margin-left:auto}
+.rec-card-reason{font-size:12px;color:var(--sub);margin:6px 0;line-height:1.4}
+.rec-card-actions{display:flex;gap:8px;margin-top:8px}
+.rec-card-actions button{flex:1;padding:6px 8px;font-size:12px}
+.rec-placeholder{text-align:center;padding:40px 20px;color:var(--muted)}
+.rec-placeholder .rec-icon{font-size:48px;margin-bottom:12px}
+
 /* Responsive */
 @media(min-width:768px){
   body{max-width:480px;margin:0 auto;box-shadow:-1px 0 0 var(--border),1px 0 0 var(--border)}
@@ -356,6 +390,12 @@ button:active{opacity:.8}
   <div id="position-cards"></div>
 </div>
 
+
+<!-- === Page: Recommendations === -->
+<div id="page-recommendations" class="page">
+  <div id="rec-content"></div>
+</div>
+
 <!-- === Page: Logs === -->
 <div id="page-logs" class="page">
   <div class="flex justify-between items-center mb-3">
@@ -377,6 +417,7 @@ button:active{opacity:.8}
   <div class="nav-tab" onclick="switchTab('market',this)"><span class="nav-icon">📊</span>市场</div>
   <div class="nav-tab" onclick="switchTab('screener',this)"><span class="nav-icon">🔍</span>选股</div>
   <div class="nav-tab" onclick="switchTab('positions',this)"><span class="nav-icon">💼</span>持仓</div>
+  <div class="nav-tab" onclick="switchTab('recommendations',this)"><span class="nav-icon">💡</span>推荐</div>
   <div class="nav-tab" onclick="switchTab('logs',this)"><span class="nav-icon">📋</span>日志</div>
 </div>
 
@@ -559,6 +600,7 @@ function switchTab(tab, el) {
   if (tab === 'logs') renderLogs();
   if (tab === 'market') renderMarket();
   if (tab === 'overview') renderOverview();
+  if (tab === 'recommendations') loadRecommendations();
 }
 
 function switchSubTab(page, sub, el) {
@@ -1578,6 +1620,149 @@ function addLog() {
   setLogs(logs);
   closeModal();
   renderLogs();
+}
+
+
+// ==================== RECOMMENDATIONS ====================
+let recommendationsData = null;
+let recCollapsed = { short: true, mid: true, long: true };
+
+async function loadRecommendations() {
+  try {
+    const res = await fetch(`data/recommendations.json?t=${Date.now()}`);
+    if (!res.ok) throw new Error('暂无数据');
+    const data = await res.json();
+    if (!data.short_term && !data.mid_term && !data.long_term) throw new Error('空数据');
+    recommendationsData = data;
+    renderRecommendations(data);
+  } catch(e) {
+    showRecommendationPlaceholder();
+  }
+}
+
+function showRecommendationPlaceholder() {
+  document.getElementById('rec-content').innerHTML = `
+    <div class="rec-placeholder">
+      <div class="rec-icon">💡</div>
+      <div class="fw-bold mb-2">暂无推荐数据</div>
+      <div class="fs-sm">选股脚本尚未运行或无结果<br>首次数据将在下一个交易日15:35后自动生成</div>
+    </div>`;
+}
+
+function renderRecommendations(data) {
+  let html = '';
+
+  // Header
+  const genDate = data.generated_at || '';
+  const displayDate = genDate ? genDate.split('T')[0] : '--';
+  html += `<div class="rec-header">
+    <div class="rec-date">📊 基于 ${displayDate} 收盘数据</div>
+    <div class="rec-note">· 每日15:35自动更新 · AI筛选仅供参考</div>
+  </div>`;
+
+  // Short term
+  html += renderRecSection('short', '🔴 短线推荐（3-10日）', data.short_term || []);
+  // Mid term
+  html += renderRecSection('mid', '🟡 中期推荐（1-3月）', data.mid_term || []);
+  // Long term
+  html += renderRecSection('long', '🟢 长线持有（6月+）', data.long_term || []);
+
+  document.getElementById('rec-content').innerHTML = html;
+}
+
+function renderRecSection(key, title, items) {
+  const collapsed = recCollapsed[key];
+  const count = items.length;
+  let html = `<div class="rec-section">`;
+  html += `<div class="rec-section-header" onclick="toggleRecSection('${key}')">
+    <span class="rec-sec-title">${title} · ${count}只</span>
+    <span class="rec-arrow ${collapsed ? '' : 'open'}">▶</span>
+  </div>`;
+  if (!collapsed) {
+    html += '<div class="rec-cards">';
+    if (!items.length) {
+      html += '<div class="text-muted text-center p-3 fs-sm">本次无符合条件的标的</div>';
+    } else {
+      items.forEach(item => {
+        html += renderRecCard(item);
+      });
+    }
+    html += '</div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+function renderRecCard(item) {
+  const scoreClass = item.score >= 80 ? 'high' : item.score >= 60 ? 'mid' : 'low';
+  const changePct = item.change_pct || 0;
+  const changeColor = changePct > 0 ? 'var(--green)' : changePct < 0 ? 'var(--red)' : 'var(--sub)';
+  const changeStr = changePct > 0 ? `+${changePct}%` : `${changePct}%`;
+
+  let html = `<div class="rec-card score-${scoreClass}">`;
+  // Top row: name + score
+  html += `<div class="rec-card-top">
+    <div><span class="rec-card-name">${item.name || '--'}</span><span class="rec-card-code">${item.code}</span></div>
+    <span class="rec-card-score ${scoreClass}">${item.score}分</span>
+  </div>`;
+  // Price row
+  html += `<div class="rec-card-price">
+    <span class="price-val">¥${item.price ? item.price.toFixed(2) : '--'}</span>
+    <span class="price-chg" style="color:${changeColor}">${changeStr}</span>
+    <span class="price-mcap">市值${item.market_cap ? Math.round(item.market_cap) + '亿' : '--'}</span>
+  </div>`;
+  // Reason
+  if (item.reason) {
+    html += `<div class="rec-card-reason">💡 ${item.reason}</div>`;
+  }
+  // Key metrics
+  if (item.key_metrics) {
+    const metrics = Object.entries(item.key_metrics).filter(([k,v]) => v != null);
+    if (metrics.length) {
+      html += '<div class="flex gap-2 mt-2 flex-wrap">';
+      const metricLabels = {rsi:'RSI',vol_ratio:'量比',ma_signal:'均线',ma60_slope:'斜率%',turnover:'换手%',change_60d:'60日涨幅%',roe:'ROE%',gross_margin:'毛利率%',revenue_growth:'营收增速%',pe:'PE'};
+      metrics.forEach(([k,v]) => {
+        const label = metricLabels[k] || k;
+        const val = typeof v === 'number' ? v : v;
+        html += `<span class="fs-xs" style="background:var(--bg);padding:2px 6px;border-radius:4px;color:var(--sub)">${label}:${val}</span>`;
+      });
+      html += '</div>';
+    }
+  }
+  // Actions
+  const escapedName = (item.name || '').replace(/'/g, "\'");
+  html += `<div class="rec-card-actions">
+    <button class="btn-success btn-sm" onclick="addPosFromRec('${item.code}','${escapedName}')">+ 加入持仓</button>
+    <button class="btn-ghost btn-sm" onclick="viewRecKline('${item.code}','${escapedName}')">📈 查看K线</button>
+  </div>`;
+  html += '</div>';
+  return html;
+}
+
+function toggleRecSection(key) {
+  recCollapsed[key] = !recCollapsed[key];
+  if (recommendationsData) renderRecommendations(recommendationsData);
+}
+
+function addPosFromRec(code, name) {
+  showAddPosition();
+  setTimeout(() => {
+    const codeInput = document.getElementById('pos-code');
+    const nameInput = document.getElementById('pos-name');
+    if (codeInput) codeInput.value = code;
+    if (nameInput) nameInput.value = name;
+  }, 100);
+}
+
+function viewRecKline(code, name) {
+  // Create a temporary position object to open K-line
+  currentKlinePos = { code, name, stopLoss: 0, cost: 0, tp1: 0, tp2: 0, quietZoneMin: 0, quietZoneMax: 0, logic: '', logicStatus: '正常', destroyChecked: [false,false,false,false,false,false,false], builtStages: [false,false,false] };
+  currentKLT = 101;
+  document.getElementById('kline-title').textContent = `${name} (${code})`;
+  document.getElementById('kline-price-header').innerHTML = '<div style="font-size:18px;font-weight:700">--</div>';
+  document.getElementById('kline-page').classList.add('active');
+  switchKlineTab('tech', document.querySelectorAll('.kline-tab')[1]);
+  loadKlineData();
 }
 
 // ==================== MODAL ====================
