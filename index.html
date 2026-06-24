@@ -149,6 +149,31 @@ button:active{opacity:.8}
 .pos-actions button{flex:1;padding:8px;font-size:12px}
 
 /* FAB */
+/* Recommendation styles */
+.rec-section{background:var(--card);border-radius:12px;margin-bottom:12px;overflow:hidden;border:1px solid var(--border)}
+.rec-section-hd{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;cursor:pointer;font-weight:600;font-size:14px;user-select:none}
+.rec-section-hd:active{background:rgba(255,255,255,.04)}
+.rec-arrow{transition:transform .25s;font-size:10px;color:var(--muted)}
+.rec-list{padding:0 10px 10px}
+.rec-list.collapsed{display:none}
+.rec-card{background:var(--bg);border-radius:10px;padding:12px;margin-bottom:8px;border:1px solid var(--border)}
+.rec-card-hd{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
+.rec-card-name{font-size:15px;font-weight:700}
+.rec-card-code{font-size:11px;color:var(--muted);margin-top:2px}
+.rec-score-bar{height:4px;border-radius:2px;margin:8px 0}
+.rec-score-green{background:linear-gradient(to right,#22c55e,#16a34a)}
+.rec-score-yellow{background:linear-gradient(to right,#eab308,#ca8a04)}
+.rec-score-orange{background:linear-gradient(to right,#f97316,#ea580c)}
+.rec-metrics{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0}
+.rec-metric{font-size:10px;padding:2px 7px;border-radius:4px;background:rgba(255,255,255,.06);color:var(--sub)}
+.rec-reason{font-size:12px;color:var(--sub);line-height:1.5;margin:6px 0}
+.rec-btns{display:flex;gap:8px;margin-top:10px}
+.rec-btn{flex:1;padding:7px 0;border-radius:8px;border:none;font-size:12px;font-weight:600;cursor:pointer;text-align:center}
+.rec-btn-add{background:rgba(59,130,246,.18);color:var(--blue);border:1px solid rgba(59,130,246,.3)}
+.rec-btn-kline{background:rgba(255,255,255,.06);color:var(--sub);border:1px solid var(--border)}
+.rec-placeholder{text-align:center;padding:40px 20px;color:var(--muted)}
+.rec-placeholder .rec-ph-icon{font-size:36px;margin-bottom:10px}
+/* end rec styles */
 .fab{position:fixed;bottom:80px;right:20px;width:48px;height:48px;border-radius:50%;background:var(--blue);color:#fff;font-size:24px;display:flex;align-items:center;justify-content:center;z-index:200;box-shadow:0 4px 12px rgba(59,130,246,.4)}
 
 /* Bottom nav */
@@ -222,40 +247,6 @@ button:active{opacity:.8}
 .total-score{text-align:center;padding:20px}
 .total-score .score-num{font-size:48px;font-weight:700}
 .total-score .score-label{font-size:13px;color:var(--sub)}
-
-
-/* Recommend page */
-.rec-header{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:12px}
-.rec-header .rec-date{font-size:12px;color:var(--sub)}
-.rec-header .rec-note{font-size:11px;color:var(--muted);margin-top:2px}
-.rec-section{margin-bottom:12px}
-.rec-section-header{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:10px 14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none}
-.rec-section-header:active{opacity:.8}
-.rec-section-header .rec-sec-title{font-size:14px;font-weight:700}
-.rec-section-header .rec-arrow{font-size:12px;color:var(--muted);transition:transform .2s}
-.rec-section-header .rec-arrow.open{transform:rotate(90deg)}
-.rec-cards{padding:6px 0}
-.rec-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px;margin:8px 0;position:relative;overflow:hidden}
-.rec-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%}
-.rec-card.score-high::before{background:var(--green)}
-.rec-card.score-mid::before{background:var(--yellow)}
-.rec-card.score-low::before{background:var(--orange)}
-.rec-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
-.rec-card-name{font-size:15px;font-weight:700}
-.rec-card-code{font-size:12px;color:var(--sub);margin-left:6px}
-.rec-card-score{font-size:14px;font-weight:700;padding:2px 8px;border-radius:12px}
-.rec-card-score.high{background:rgba(34,197,94,.15);color:var(--green)}
-.rec-card-score.mid{background:rgba(234,179,8,.15);color:var(--yellow)}
-.rec-card-score.low{background:rgba(249,115,22,.15);color:var(--orange)}
-.rec-card-price{display:flex;align-items:baseline;gap:10px;margin-bottom:4px}
-.rec-card-price .price-val{font-size:16px;font-weight:700}
-.rec-card-price .price-chg{font-size:12px;font-weight:500}
-.rec-card-price .price-mcap{font-size:12px;color:var(--muted);margin-left:auto}
-.rec-card-reason{font-size:12px;color:var(--sub);margin:6px 0;line-height:1.4}
-.rec-card-actions{display:flex;gap:8px;margin-top:8px}
-.rec-card-actions button{flex:1;padding:6px 8px;font-size:12px}
-.rec-placeholder{text-align:center;padding:40px 20px;color:var(--muted)}
-.rec-placeholder .rec-icon{font-size:48px;margin-bottom:12px}
 
 /* Responsive */
 @media(min-width:768px){
@@ -390,12 +381,6 @@ button:active{opacity:.8}
   <div id="position-cards"></div>
 </div>
 
-
-<!-- === Page: Recommendations === -->
-<div id="page-recommendations" class="page">
-  <div id="rec-content"></div>
-</div>
-
 <!-- === Page: Logs === -->
 <div id="page-logs" class="page">
   <div class="flex justify-between items-center mb-3">
@@ -404,6 +389,38 @@ button:active{opacity:.8}
   </div>
   <div id="log-list"></div>
   <div id="log-stats" class="card mt-3"></div>
+</div>
+
+<!-- === Page: Recommendations === -->
+<div id="page-recommendations" class="page">
+  <div id="rec-header" class="text-muted text-sm mb-3" style="text-align:center">每日15:35自动更新 · 加载中...</div>
+  <!-- 短线 -->
+  <div class="rec-section">
+    <div class="rec-section-hd" onclick="toggleRecSection('short')">
+      <span>🔴 短线推荐 <span class="text-muted text-sm">3-10日</span></span>
+      <span id="rec-short-count" class="text-muted text-sm"></span>
+      <span class="rec-arrow" id="rec-short-arrow">▼</span>
+    </div>
+    <div id="rec-short-list" class="rec-list"></div>
+  </div>
+  <!-- 中期 -->
+  <div class="rec-section">
+    <div class="rec-section-hd" onclick="toggleRecSection('mid')">
+      <span>🟡 中期推荐 <span class="text-muted text-sm">1-3月</span></span>
+      <span id="rec-mid-count" class="text-muted text-sm"></span>
+      <span class="rec-arrow" id="rec-mid-arrow">▼</span>
+    </div>
+    <div id="rec-mid-list" class="rec-list"></div>
+  </div>
+  <!-- 长线 -->
+  <div class="rec-section">
+    <div class="rec-section-hd" onclick="toggleRecSection('long')">
+      <span>🟢 长线持有 <span class="text-muted text-sm">6月+</span></span>
+      <span id="rec-long-count" class="text-muted text-sm"></span>
+      <span class="rec-arrow" id="rec-long-arrow">▼</span>
+    </div>
+    <div id="rec-long-list" class="rec-list"></div>
+  </div>
 </div>
 
 <!-- FAB: Add Position -->
@@ -1622,149 +1639,6 @@ function addLog() {
   renderLogs();
 }
 
-
-// ==================== RECOMMENDATIONS ====================
-let recommendationsData = null;
-let recCollapsed = { short: true, mid: true, long: true };
-
-async function loadRecommendations() {
-  try {
-    const res = await fetch(`data/recommendations.json?t=${Date.now()}`);
-    if (!res.ok) throw new Error('暂无数据');
-    const data = await res.json();
-    if (!data.short_term && !data.mid_term && !data.long_term) throw new Error('空数据');
-    recommendationsData = data;
-    renderRecommendations(data);
-  } catch(e) {
-    showRecommendationPlaceholder();
-  }
-}
-
-function showRecommendationPlaceholder() {
-  document.getElementById('rec-content').innerHTML = `
-    <div class="rec-placeholder">
-      <div class="rec-icon">💡</div>
-      <div class="fw-bold mb-2">暂无推荐数据</div>
-      <div class="fs-sm">选股脚本尚未运行或无结果<br>首次数据将在下一个交易日15:35后自动生成</div>
-    </div>`;
-}
-
-function renderRecommendations(data) {
-  let html = '';
-
-  // Header
-  const genDate = data.generated_at || '';
-  const displayDate = genDate ? genDate.split('T')[0] : '--';
-  html += `<div class="rec-header">
-    <div class="rec-date">📊 基于 ${displayDate} 收盘数据</div>
-    <div class="rec-note">· 每日15:35自动更新 · AI筛选仅供参考</div>
-  </div>`;
-
-  // Short term
-  html += renderRecSection('short', '🔴 短线推荐（3-10日）', data.short_term || []);
-  // Mid term
-  html += renderRecSection('mid', '🟡 中期推荐（1-3月）', data.mid_term || []);
-  // Long term
-  html += renderRecSection('long', '🟢 长线持有（6月+）', data.long_term || []);
-
-  document.getElementById('rec-content').innerHTML = html;
-}
-
-function renderRecSection(key, title, items) {
-  const collapsed = recCollapsed[key];
-  const count = items.length;
-  let html = `<div class="rec-section">`;
-  html += `<div class="rec-section-header" onclick="toggleRecSection('${key}')">
-    <span class="rec-sec-title">${title} · ${count}只</span>
-    <span class="rec-arrow ${collapsed ? '' : 'open'}">▶</span>
-  </div>`;
-  if (!collapsed) {
-    html += '<div class="rec-cards">';
-    if (!items.length) {
-      html += '<div class="text-muted text-center p-3 fs-sm">本次无符合条件的标的</div>';
-    } else {
-      items.forEach(item => {
-        html += renderRecCard(item);
-      });
-    }
-    html += '</div>';
-  }
-  html += '</div>';
-  return html;
-}
-
-function renderRecCard(item) {
-  const scoreClass = item.score >= 80 ? 'high' : item.score >= 60 ? 'mid' : 'low';
-  const changePct = item.change_pct || 0;
-  const changeColor = changePct > 0 ? 'var(--green)' : changePct < 0 ? 'var(--red)' : 'var(--sub)';
-  const changeStr = changePct > 0 ? `+${changePct}%` : `${changePct}%`;
-
-  let html = `<div class="rec-card score-${scoreClass}">`;
-  // Top row: name + score
-  html += `<div class="rec-card-top">
-    <div><span class="rec-card-name">${item.name || '--'}</span><span class="rec-card-code">${item.code}</span></div>
-    <span class="rec-card-score ${scoreClass}">${item.score}分</span>
-  </div>`;
-  // Price row
-  html += `<div class="rec-card-price">
-    <span class="price-val">¥${item.price ? item.price.toFixed(2) : '--'}</span>
-    <span class="price-chg" style="color:${changeColor}">${changeStr}</span>
-    <span class="price-mcap">市值${item.market_cap ? Math.round(item.market_cap) + '亿' : '--'}</span>
-  </div>`;
-  // Reason
-  if (item.reason) {
-    html += `<div class="rec-card-reason">💡 ${item.reason}</div>`;
-  }
-  // Key metrics
-  if (item.key_metrics) {
-    const metrics = Object.entries(item.key_metrics).filter(([k,v]) => v != null);
-    if (metrics.length) {
-      html += '<div class="flex gap-2 mt-2 flex-wrap">';
-      const metricLabels = {rsi:'RSI',vol_ratio:'量比',ma_signal:'均线',ma60_slope:'斜率%',turnover:'换手%',change_60d:'60日涨幅%',roe:'ROE%',gross_margin:'毛利率%',revenue_growth:'营收增速%',pe:'PE'};
-      metrics.forEach(([k,v]) => {
-        const label = metricLabels[k] || k;
-        const val = typeof v === 'number' ? v : v;
-        html += `<span class="fs-xs" style="background:var(--bg);padding:2px 6px;border-radius:4px;color:var(--sub)">${label}:${val}</span>`;
-      });
-      html += '</div>';
-    }
-  }
-  // Actions
-  const escapedName = (item.name || '').replace(/'/g, "\'");
-  html += `<div class="rec-card-actions">
-    <button class="btn-success btn-sm" onclick="addPosFromRec('${item.code}','${escapedName}')">+ 加入持仓</button>
-    <button class="btn-ghost btn-sm" onclick="viewRecKline('${item.code}','${escapedName}')">📈 查看K线</button>
-  </div>`;
-  html += '</div>';
-  return html;
-}
-
-function toggleRecSection(key) {
-  recCollapsed[key] = !recCollapsed[key];
-  if (recommendationsData) renderRecommendations(recommendationsData);
-}
-
-function addPosFromRec(code, name) {
-  showAddPosition();
-  setTimeout(() => {
-    const codeInput = document.getElementById('pos-code');
-    const nameInput = document.getElementById('pos-name');
-    if (codeInput) codeInput.value = code;
-    if (nameInput) nameInput.value = name;
-  }, 100);
-}
-
-function viewRecKline(code, name) {
-  // Create a temporary position object to open K-line
-  currentKlinePos = { code, name, stopLoss: 0, cost: 0, tp1: 0, tp2: 0, quietZoneMin: 0, quietZoneMax: 0, logic: '', logicStatus: '正常', destroyChecked: [false,false,false,false,false,false,false], builtStages: [false,false,false] };
-  currentKLT = 101;
-  document.getElementById('kline-title').textContent = `${name} (${code})`;
-  document.getElementById('kline-price-header').innerHTML = '<div style="font-size:18px;font-weight:700">--</div>';
-  document.getElementById('kline-page').classList.add('active');
-  switchKlineTab('tech', document.querySelectorAll('.kline-tab')[1]);
-  loadKlineData();
-}
-
 // ==================== MODAL ====================
 function showModal(html) {
   document.getElementById('modal-body').innerHTML = html;
@@ -1820,6 +1694,136 @@ async function doPoll() {
       document.getElementById('kline-price-header').innerHTML = `<div style="font-size:18px;font-weight:700;color:${pctColor(sp.change)}">${fmtNum(sp.price)}</div><div style="font-size:12px;color:${pctColor(sp.change)}">${fmtPct(sp.change)}</div>`;
     }
   }
+}
+
+// ==================== RECOMMENDATIONS ====================
+let recData = null;
+let recCollapsed = {short: false, mid: false, long: false};
+
+async function loadRecommendations() {
+  const header = document.getElementById('rec-header');
+  header.textContent = '加载中...';
+  try {
+    const res = await fetch('data/recommendations.json?t=' + Date.now());
+    if (!res.ok) throw new Error('no data');
+    const data = await res.json();
+    recData = data;
+    if (data.trade_date) {
+      header.textContent = '基于 ' + data.trade_date + ' 收盘数据 · 每日 15:35 自动更新';
+    } else {
+      header.textContent = '数据尚未生成，首次运行后显示';
+    }
+    renderRecSection('short', data.short_term || []);
+    renderRecSection('mid', data.mid_term || []);
+    renderRecSection('long', data.long_term || []);
+  } catch(e) {
+    header.textContent = '暂无推荐数据';
+    showRecPlaceholder();
+  }
+}
+
+function showRecPlaceholder() {
+  ['short','mid','long'].forEach(k => {
+    const el = document.getElementById('rec-' + k + '-list');
+    el.innerHTML = '<div class="rec-placeholder"><div class="rec-ph-icon">🔍</div><div>GitHub Actions未运行，每个工作日 15:35 自动生成</div></div>';
+    document.getElementById('rec-' + k + '-count').textContent = '0 只';
+  });
+}
+
+function renderRecSection(key, stocks) {
+  const list = document.getElementById('rec-' + key + '-list');
+  const count = document.getElementById('rec-' + key + '-count');
+  count.textContent = stocks.length + ' 只';
+  if (!stocks.length) {
+    list.innerHTML = '<div class="rec-placeholder"><div class="rec-ph-icon">📊</div><div>当前无符合条件的标的</div></div>';
+    return;
+  }
+  list.innerHTML = stocks.map(s => renderRecCard(s, key)).join('');
+}
+
+function renderRecCard(s, type) {
+  const scoreColor = s.score >= 80 ? 'green' : s.score >= 60 ? 'yellow' : 'orange';
+  const scoreWidth = Math.min(100, s.score) + '%';
+  const priceColor = s.change_pct >= 0 ? 'var(--red)' : 'var(--green)';
+  const priceSign = s.change_pct >= 0 ? '+' : '';
+
+  // key_metrics 标签
+  let metricTags = '';
+  if (s.key_metrics) {
+    const m = s.key_metrics;
+    if (m.rsi !== undefined) metricTags += `<span class="rec-metric">RSI ${m.rsi}</span>`;
+    if (m.vol_ratio !== undefined) metricTags += `<span class="rec-metric">量能放大 ${m.vol_ratio}x</span>`;
+    if (m.ma_signal) metricTags += `<span class="rec-metric">${m.ma_signal}</span>`;
+    if (m.turnover !== undefined) metricTags += `<span class="rec-metric">换手 ${m.turnover}%</span>`;
+    if (m.roe !== undefined) metricTags += `<span class="rec-metric">ROE ${m.roe}%</span>`;
+    if (m.gross_margin !== undefined) metricTags += `<span class="rec-metric">毛利 ${m.gross_margin}%</span>`;
+    if (m.pe !== undefined) metricTags += `<span class="rec-metric">PE ${m.pe}x</span>`;
+    if (m.chg5d !== undefined) metricTags += `<span class="rec-metric">5日${m.chg5d>0?'+':''}${m.chg5d}%</span>`;
+    if (m.chg60d !== undefined) metricTags += `<span class="rec-metric">60日${m.chg60d>0?'+':''}${m.chg60d}%</span>`;
+  }
+
+  return `
+  <div class="rec-card">
+    <div class="rec-card-hd">
+      <div>
+        <div class="rec-card-name">${s.name}</div>
+        <div class="rec-card-code">${s.code} · 市値 ${s.market_cap ? s.market_cap.toFixed(0) : '--'}亿</div>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:16px;font-weight:700;color:${priceColor}">¥${s.price ? s.price.toFixed(2) : '--'}</div>
+        <div style="font-size:12px;color:${priceColor}">${priceSign}${s.change_pct ? s.change_pct.toFixed(2) : 0}%</div>
+        <div style="font-size:13px;font-weight:700;color:var(--yellow);margin-top:2px">${s.score}分</div>
+      </div>
+    </div>
+    <div class="rec-score-bar rec-score-${scoreColor}" style="width:${scoreWidth}"></div>
+    ${metricTags ? '<div class="rec-metrics">' + metricTags + '</div>' : ''}
+    <div class="rec-reason">${s.reason || ''}</div>
+    <div class="rec-btns">
+      <div class="rec-btn rec-btn-add" onclick="openAddFromRec('${s.code}','${s.name}')">➕ 加入持仓</div>
+      <div class="rec-btn rec-btn-kline" onclick="openKlineFromRec('${s.code}','${s.name}')">📈 K线</div>
+    </div>
+  </div>`;
+}
+
+function toggleRecSection(key) {
+  const list = document.getElementById('rec-' + key + '-list');
+  const arrow = document.getElementById('rec-' + key + '-arrow');
+  recCollapsed[key] = !recCollapsed[key];
+  list.classList.toggle('collapsed', recCollapsed[key]);
+  arrow.style.transform = recCollapsed[key] ? 'rotate(-90deg)' : '';
+}
+
+function openAddFromRec(code, name) {
+  // 预填代码和名称，打开添加持仓弹窗
+  showAddPosition();
+  setTimeout(() => {
+    const codeInput = document.querySelector('#modal-add-position input[placeholder*="600519"]');
+    const nameInput = document.querySelector('#modal-add-position input[placeholder*="贵州茅台"]');
+    if (codeInput) { codeInput.value = code; codeInput.dispatchEvent(new Event('input', {bubbles:true})); }
+    if (nameInput) { nameInput.value = name; nameInput.dispatchEvent(new Event('input', {bubbles:true})); }
+  }, 100);
+}
+
+function openKlineFromRec(code, name) {
+  // 构造一个临时持仓对象来打开K线页
+  const tempPos = {
+    id: 'temp_rec_' + code,
+    code: code,
+    secid: codeToSecid(code),
+    name: name,
+    type: 'core',
+    cost: 0,
+    shares: 0,
+    stopLoss: 0,
+    takeProfit1: 0,
+    takeProfit2: 0,
+    quietZoneMin: 0,
+    quietZoneMax: 0,
+    logic: '推荐查看',
+    destroyList: [],
+    destroyChecked: []
+  };
+  openKlinePage(tempPos);
 }
 
 // ==================== WINDOW RESIZE ====================
