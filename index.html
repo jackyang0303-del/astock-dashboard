@@ -623,8 +623,10 @@ function switchTab(tab, el) {
 function switchSubTab(page, sub, el) {
   el.parentElement.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
-  document.querySelectorAll('#page-' + page + ' .sub-panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + page + '-' + sub).classList.add('active');
+  var pageEl = document.getElementById('page-' + page);
+  if (pageEl) pageEl.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('active'));
+  var target = document.getElementById(page + '-' + sub);
+  if (target) target.classList.add('active');
   // 切换后重新渲染当前子面板内容
   if (page === 'market') renderMarket();
 }
