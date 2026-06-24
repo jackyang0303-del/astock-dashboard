@@ -490,7 +490,7 @@ button:active{opacity:.8}
 <script>
 // ==================== GLOBALS ====================
 const PASSWORD = '230411';
-const INDEX_SECIDS = '1.000001,1.000688,0.399001,1.399986';
+const INDEX_SECIDS = '1.000001,1.000688,0.399001,0.399986'; // 银行指数399986是深市用0.
 const INDEX_NAMES = {'000001':'上证指数','000688':'科创50','399001':'深证成指','399986':'银行指数'};
 let currentTab = 'overview';
 let currentKlinePos = null;
@@ -530,7 +530,7 @@ function fmtMoney(n) {
   return n.toFixed(2);
 }
 
-function pctColor(n) { return n > 0 ? 'var(--green)' : n < 0 ? 'var(--red)' : 'var(--sub)'; }
+function pctColor(n) { return n > 0 ? 'var(--red)' : n < 0 ? 'var(--green)' : 'var(--sub)'; } // A股：涨红跌绿
 
 // ==================== API ====================
 async function fetchJSON(url) {
@@ -625,6 +625,8 @@ function switchSubTab(page, sub, el) {
   el.classList.add('active');
   document.querySelectorAll('#page-' + page + ' .sub-panel').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + page + '-' + sub).classList.add('active');
+  // 切换后重新渲染当前子面板内容
+  if (page === 'market') renderMarket();
 }
 
 // ==================== INIT ====================
