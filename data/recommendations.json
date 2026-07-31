@@ -1,9 +1,6 @@
 {
-  "generated_at": "2026-07-30T10:03:31",
-  "trade_date": "2026-07-30",
-  "script_version": "v3",
-  "elapsed_seconds": 127,
-  "universe_size": 100,
+  "generated_at": "2026-07-31T10:10:57.405624",
+  "error": "股票列表获取失败",
   "short_term": [],
   "mid_term": [],
   "long_term": []
