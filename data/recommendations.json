@@ -1,6 +1,9 @@
 {
-  "generated_at": "2026-11-11T15:34:56.735898",
-  "error": "实时行情获取异常",
+  "generated_at": "2026-11-12T16:13:24",
+  "trade_date": "2026-11-12",
+  "script_version": "v3",
+  "elapsed_seconds": 141,
+  "universe_size": 100,
   "short_term": [],
   "mid_term": [],
   "long_term": []
